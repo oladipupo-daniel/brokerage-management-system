@@ -1,0 +1,14 @@
+Destribution/
+├── README.md
+├── .gitignore
+├── requirements.txt
+├── setup.py
+├── tree.md          ✅ Save it here
+└── Brokerage/
+    ├── __init__.py
+    ├── main.py
+    ├── client.py
+    ├── transaction.py
+    ├── portfolio.py
+    └── utils/
+        └── helpers.py
