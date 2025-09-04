@@ -1,14 +1,11 @@
-Destribution/
-├── README.md
-├── .gitignore
-├── requirements.txt
-├── setup.py
-├── tree.md          ✅ Save it here
-└── Brokerage/
-    ├── __init__.py
-    ├── main.py
-    ├── client.py
-    ├── transaction.py
-    ├── portfolio.py
-    └── utils/
-        └── helpers.py
+PYHTON_BROKERAGE_CONSOLE_PROJECT/
+└── Destribution/
+    └── Brokerage/
+        ├── __init__.py          ← must exist (even empty)
+        ├── main.py
+        ├── client.py
+        ├── transaction.py
+        ├── portfolio.py
+        └── utils/
+            ├── __init__.py      ← must exist
+            └── db.py

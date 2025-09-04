@@ -1,0 +1,8 @@
+{
+    "python.autoComplete.extraPaths": [
+        "c:/Users/hp/Desktop/PYHTON_BROKERAGE_CONSOLE_PROJECT/Destribution"
+    ],
+    "python.analysis.extraPaths": [
+        "c:/Users/hp/Desktop/PYHTON_BROKERAGE_CONSOLE_PROJECT/Destribution"
+    ]
+}

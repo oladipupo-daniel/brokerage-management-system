@@ -1,4 +1,9 @@
-from Brokerage.client import Customer
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+
+from client import Customer
 from Brokerage.utils.helpers import (
     validate_name, validate_contact, validate_flat_type, calculate_brokerage
 )
@@ -8,6 +13,8 @@ from Brokerage.portfolio import display_portfolio
 custList = []
 
 def main():
+    print("\n📦 Welcome to ABC REAL ESTATE Console App")
+
     while True:
         print("\n...................ABC REAL ESTATE..................")
         print("1. Add New Customer")
@@ -20,43 +27,48 @@ def main():
         try:
             ch = int(input("Enter Your Choice: "))
         except ValueError:
-            print("Invalid input. Please enter a number.")
+            print("❌ Invalid input. Please enter a number.")
             continue
 
         if ch == 1:
             custName = input("Enter Customer Name: ")
             if not validate_name(custName):
-                print("Please input a valid name.")
+                print("⚠️ Please input a valid name.")
                 continue
 
             contactNo = input("Enter Contact Number: ")
             if not validate_contact(contactNo):
-                print("Enter a valid 11-digit mobile number.")
+                print("⚠️ Enter a valid 11-digit mobile number.")
                 continue
 
             flatType = input("Enter Flat Type in BHK (1-4): ")
             if not validate_flat_type(flatType):
-                print("Flat Type should be between 1-4.")
+                print("⚠️ Flat Type should be between 1-4.")
                 continue
 
             try:
                 amount = float(input("Enter Amount: "))
             except ValueError:
-                print("Amount must be a number.")
+                print("⚠️ Amount must be a number.")
                 continue
 
             brokerageAmount = calculate_brokerage(flatType, amount)
-            custList.append(Customer(custName, contactNo, flatType, amount, brokerageAmount))
-            print("Customer added successfully.")
+            new_customer = Customer(custName, contactNo, flatType, amount, brokerageAmount)
+            custList.append(new_customer)
+            new_customer.save_to_db()
+            print("✅ Customer added and saved to database successfully.")
 
         elif ch == 2:
-            print("\nCustName\tContact No\tFlat\tAmount\tBrokerage")
-            for obj in custList:
-                print(f"{obj.custName}\t{obj.contactNo}\t{obj.flatType}\t{obj.amount}\t{obj.brokerageAmount}")
+            if not custList:
+                print("📭 No customers added yet.")
+            else:
+                print("\nCustName\tContact No\tFlat\tAmount\tBrokerage")
+                for obj in custList:
+                    print(f"{obj.custName}\t{obj.contactNo}\t{obj.flatType}\t{obj.amount}\t{obj.brokerageAmount}")
 
         elif ch == 3:
             total = sum(obj.brokerageAmount for obj in custList)
-            print("Total Brokerage Amount Received is:", total)
+            print(f"💰 Total Brokerage Amount Received: ₦{total:,.2f}")
 
         elif ch == 4:
             name = input("Enter customer name: ")
@@ -64,7 +76,7 @@ def main():
             try:
                 quantity = int(input("Enter quantity: "))
             except ValueError:
-                print("Quantity must be a number.")
+                print("⚠️ Quantity must be a number.")
                 continue
             action = input("Buy or Sell: ").lower()
 
@@ -73,7 +85,7 @@ def main():
                     execute_transaction(client, asset, quantity, action)
                     break
             else:
-                print("Client not found.")
+                print("❌ Client not found.")
 
         elif ch == 5:
             name = input("Enter customer name: ")
@@ -82,15 +94,15 @@ def main():
                     display_portfolio(client)
                     break
             else:
-                print("Client not found.")
+                print("❌ Client not found.")
 
         elif ch == 6:
             opt = input("Are you sure you want to quit? (Yes/No): ")
             if opt.lower() == "yes":
-                print("Thank you for using ABC Real Estate!")
+                print("👋 Thank you for using ABC Real Estate!")
                 break
         else:
-            print("Enter a valid choice.")
+            print("⚠️ Enter a valid choice.")
 
 if __name__ == "__main__":
     main()
